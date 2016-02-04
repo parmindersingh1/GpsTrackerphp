@@ -2,7 +2,7 @@
  
 include './include/DbHandler.php';
 $db = new DbHandler();
- header('Content-Type: application/json');
+header('Content-Type: application/json');
  
 $response = array();
 $response["error"] = false;
@@ -19,7 +19,7 @@ if (isset($_POST['mobile']) && $_POST['mobile'] != '') {
     	$response["error"] = true;
         $response["message"] = "Sorry! Failed to Logout your account.";
     }
-     
+
      
 } else {
     $response["error"] = true;

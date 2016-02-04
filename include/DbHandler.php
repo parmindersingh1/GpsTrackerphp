@@ -214,19 +214,30 @@ class DbHandler {
   }
 
   public function logoutUser($mobile) {
-     if ($this->isUserExists($mobile)) {
-        $stmt = $this->conn->prepare("INSERT INTO archived_users(id, name, mobile, vehicle_reg_no) SELECT id, name, mobile, vehicle_reg_no FROM users WHERE mobile = ?");
-        $stmt->bind_param("s", $mobile);
- 
-        $result_insert = $stmt->execute();
+     $user_id = $this->getActiveUserId($mobile);
+     if ($user_id != NULL) {
+        $stmt = $this->conn->prepare("INSERT INTO archived_users(id, name, mobile, vehicle_reg_no) SELECT id, name, mobile, vehicle_reg_no FROM users WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
 
-        $stmt = $this->conn->prepare("DELETE FROM users  WHERE mobile = ?");
-        $stmt->bind_param("s", $mobile);
-        $result_delete =$stmt->execute();
+        // Delete Dependencies
+        $stmt = $this->conn->prepare("DELETE FROM sms_codes where user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+
+        // Delete Dependencies
+        $stmt = $this->conn->prepare("DELETE FROM images where user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+
+        $stmt = $this->conn->prepare("DELETE FROM users WHERE id = ?");           
+        $stmt->bind_param("i", $user_id);           
+        $result_delete = $stmt->execute();                    
+        
  
         $stmt->close();
  
-        return ($result_insert && $result_delete);
+        return  $result_delete;
      } 
      return NULL;
   }

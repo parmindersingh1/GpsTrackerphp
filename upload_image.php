@@ -2,11 +2,10 @@
  
 include './include/DbHandler.php';
 $db = new DbHandler();
- header('Content-Type: application/json');
+header('Content-Type: application/json');
  
 $response = array();
-$response["error"] = false;
-$response["message"] = "Image Uploaded successfully!"+$_POST['mobile'];
+$response["error"] = false;;
  
 if (isset($_POST['mobile']) && $_POST['mobile'] != '') {
     $mobile = $_POST['mobile'];
