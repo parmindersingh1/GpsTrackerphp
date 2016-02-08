@@ -17,11 +17,12 @@ $gpsTime = isset($_POST['gpsTime'])? $_POST['gpsTime']: '0000-00-00 00:00:00';
 $gpsTime    = urldecode($gpsTime);
 $mobile = isset($_POST['mobile'])? $_POST['mobile']: '';
 $event_type = isset($_POST['event_type'])? $_POST['event_type']: '';
+$session_id = isset($_POST['session_id'])? $_POST['session_id']: '';
 
  
 if (isset($_POST['mobile']) && $_POST['mobile'] != '') {   
  
-    $location_result = $db->createLocation($mobile,$latitude,$longitude,$uuid,$vehicle_id,$event_type,$gpsTime);
+    $location_result = $db->createLocation($mobile,$latitude,$longitude,$uuid,$vehicle_id,$event_type,$session_id,$gpsTime);
  
     if ($location_result != NULL) {     
         $response["error"] = false;		

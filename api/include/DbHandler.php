@@ -167,11 +167,11 @@ class DbHandler {
         $stmt->execute();
     }
 
-  public function createLocation($mobile,$latitude,$longitude,$uuid,$vehicle_id,$event_type,$gpsTime) {
+  public function createLocation($mobile,$latitude,$longitude,$uuid,$vehicle_id,$event_type,$session_id,$gpsTime) {
          $user_id = $this->getActiveUserId($mobile);
          if ($user_id != NULL) {            
-            $stmt = $this->conn->prepare("INSERT INTO `gps`.`locations` (`user_id`, `latitude`, `longitude`, `uuid`, `vehicle_id`,event_type,gpsTime) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("iddssss", $user_id, $latitude,$longitude,$uuid,$vehicle_id,$event_type,$gpsTime);
+            $stmt = $this->conn->prepare("INSERT INTO `gps`.`locations` (`user_id`, `latitude`, `longitude`, `uuid`, `vehicle_id`,event_type,session_id,gpsTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("iddsssss", $user_id, $latitude,$longitude,$uuid,$vehicle_id,$event_type,$session_id,$gpsTime);
      
             $result = $stmt->execute();
      
