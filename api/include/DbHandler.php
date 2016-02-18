@@ -27,15 +27,15 @@ class DbHandler {
      * @param String $mobile User mobile number
      * @param String $otp user verificaiton code
      */
-    public function createUser($name, $vehicle_reg_no, $mobile, $otp) {
+    public function createUser($name, $vehicle_reg_no, $gcm_regid, $mobile, $otp) {
         $response = array();
  
         // First check if user already existed in db
         if (!$this->isUserExists($mobile)) {
               
             // insert query
-            $stmt = $this->conn->prepare("INSERT INTO users(name, vehicle_reg_no, mobile, status) values(?, ?, ?, 0)");
-            $stmt->bind_param("sss", $name, $vehicle_reg_no, $mobile);
+            $stmt = $this->conn->prepare("INSERT INTO users(name, vehicle_reg_no, gcm_regid , mobile, status) values(?, ?, ?, ?, 0)");
+            $stmt->bind_param("sss", $name, $vehicle_reg_no, $gcm_regid, $mobile);
  
             $result = $stmt->execute();
  
@@ -61,6 +61,30 @@ class DbHandler {
  
         return $response;
     }
+
+    /**
+     * list all users
+     */
+    public function getAllUsers() {
+        $stmt = $this->conn->prepare("select * FROM users");
+        $stmt->execute();
+        $meta = $stmt->result_metadata();
+
+        while ($field = $meta->fetch_field()) {
+          $parameters[] = &$row[$field->name];
+        }
+
+        call_user_func_array(array($stmt, 'bind_result'), $parameters);
+
+        while ($stmt->fetch()) {
+          foreach($row as $key => $val) {
+            $x[$key] = $val;
+          }
+          $results[] = $x;
+        }
+        return $result;
+    }
+
  
     public function createOtp($user_id, $otp) {
  

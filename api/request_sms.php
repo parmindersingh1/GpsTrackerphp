@@ -11,10 +11,11 @@ if (isset($_POST['mobile']) && $_POST['mobile'] != '') {
     $name = $_POST['name'];
     $vehicle_reg_no = $_POST['vehicle_reg_no'];
     $mobile = $_POST['mobile'];
+    $gcm_regid = $_POST["regId"];
  
     $otp = rand(100000, 999999);
  
-    $res = $db->createUser($name, $vehicle_reg_no, $mobile, $otp);
+    $res = $db->createUser($name, $vehicle_reg_no, $gcm_regid, $mobile, $otp);
  
     if ($res == USER_CREATED_SUCCESSFULLY) {
          
