@@ -15,15 +15,14 @@ define('USERNAME', 'cabshare');
 define('PASSWORD', 'eC4yrnzu');
 define('TYPE', "Individual");
 
-
+//Google API Key 
+define('GOOGLE_API_KEY', 'AIzaSyCnpWw5TmZwcJFhX4scp8MwNVlSY5pCpDc');
 
  
 define('USER_CREATED_SUCCESSFULLY', 0);
 define('USER_CREATE_FAILED', 1);
 define('USER_ALREADY_EXISTED', 2);
 
-/*
- * Google API Key
- */
-define("GOOGLE_API_KEY", "AIzaSyBVtkPC8GTheM1yo_J1FE3fUKDAJ8oFGik");
+
+
 ?>

@@ -70,10 +70,12 @@
                          
                     },
                     success: function(data, textStatus, xhr) {
+                        console.log(data);                         
                           $('.txt_message').val("");
                     },
                     error: function(xhr, textStatus, errorThrown) {
-                         
+                         console.log(errorThrown);
+                          alert(data);
                     }
                 });
                 return false;

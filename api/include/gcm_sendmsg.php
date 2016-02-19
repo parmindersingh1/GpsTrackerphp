@@ -11,7 +11,7 @@ class GCM_SendMsg {
      */
     public function send_notification($registatoin_ids, $message) {
         
-        include_once './config.php';
+        include_once dirname(__FILE__) .'/Config.php';
  
         // Set POST request variable
         $url = 'https://android.googleapis.com/gcm/send';
@@ -20,7 +20,7 @@ class GCM_SendMsg {
             'registration_ids' => $registatoin_ids,
             'data' => $message,
         );
- 
+        
         $headers = array(
             'Authorization: key=' . GOOGLE_API_KEY,
             'Content-Type: application/json'

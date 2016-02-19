@@ -27,15 +27,15 @@ class DbHandler {
      * @param String $mobile User mobile number
      * @param String $otp user verificaiton code
      */
-    public function createUser($name, $vehicle_reg_no, $gcm_regid, $mobile, $otp) {
+    public function createUser($name, $vehicle_reg_no, $mobile, $otp) {
         $response = array();
  
         // First check if user already existed in db
         if (!$this->isUserExists($mobile)) {
               
             // insert query
-            $stmt = $this->conn->prepare("INSERT INTO users(name, vehicle_reg_no, gcm_regid , mobile, status) values(?, ?, ?, ?, 0)");
-            $stmt->bind_param("sss", $name, $vehicle_reg_no, $gcm_regid, $mobile);
+            $stmt = $this->conn->prepare("INSERT INTO users(name, vehicle_reg_no , mobile, status) values(?, ?, ?, 0)");
+            $stmt->bind_param("sss", $name, $vehicle_reg_no, $mobile);
  
             $result = $stmt->execute();
  
@@ -293,6 +293,21 @@ class DbHandler {
             
      } 
      return NULL;
+  }
+
+  public function updateUserGcmRegId($regId, $mobile) {
+    $user_id = $this->getActiveUserId($mobile);
+         if ($user_id != NULL) {            
+            $stmt = $this->conn->prepare("UPDATE `users` SET gcm_regid = ? WHERE id = $user_id");
+            $stmt->bind_param("s", $regId);
+     
+            $result = $stmt->execute();
+     
+            $stmt->close();
+            return $result;
+         } else {
+            return NULL;
+         } 
   }
   
 }

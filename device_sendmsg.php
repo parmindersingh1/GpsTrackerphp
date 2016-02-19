@@ -3,7 +3,7 @@ if (isset($_GET["regId"]) && isset($_GET["message"])) {
     $regId = $_GET["regId"];
     $message = $_GET["message"];
      
-    include_once './api/include/gcm_sendmsg.php';
+    include_once dirname(__FILE__).'/api/include/gcm_sendmsg.php';
      
     $gcm = new GCM_SendMsg();
  
